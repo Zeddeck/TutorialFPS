@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float playerSpeed; 
+    
+    private CharacterController characterController;
+
+    private void Awake()
+    {
+        //Es lo primero que se ejecuta
+        characterController = GetComponent<CharacterController>();
+
+    }
+
+    private void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
-        
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(x, 0, y);
+        movement = movement * playerSpeed * Time.deltaTime;
+        movement = transform.rotation * movement;
+
+        characterController.Move(movement);
     }
 }
